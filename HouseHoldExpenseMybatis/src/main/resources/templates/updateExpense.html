@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style type="text/css">
+#header {
+	text-align: center;
+	background: azure;
+}
+
+#inputlabel {
+	padding: 5px;
+}
+
+#cancelbtn {
+	height: 40px;
+	border-radius: 15px;
+	width: 50%;
+	float: left;
+	border: 0px;
+	background: #f3c743
+}
+
+#submitbtn {
+	height: 40px;
+	border-radius: 15px;
+	width: 50%;
+	float: left;
+	border: 0px;
+	background: #3a83f7
+}
+
+#linkTag {
+	padding: 10px;
+}
+
+h1 {
+	padding: 10px;
+}
+</style>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/70b2f77ba6.js"
+	crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>家計管理</title>
+
+</head>
+<body>
+	<div id="header">
+		<h1>家計管理</h1>
+	</div>
+
+	<div class="container" style="display: block;">
+		<div class="row">
+			<div class="col">
+				<div class="card-body">
+					<div id="linkTag" class="col">
+						<a th:href="@{/}"><span>家計費一覧</span></a> / 詳細
+					</div>
+					<div style="text-align: center; display: block;">
+
+						<form th:action="@{/update}" method="post" th:object=${expenseDto}>
+							<input id="id_ed" name="id_ed" th:field="*{id_ed}" type="hidden">
+							<input id="id_em" name="id_em" th:field="*{id_em}" type="hidden">
+							<div
+								style="border: 1px; border-style: groove; border-radius: 15px; padding: 35px;">
+								<span id="inputlabel" style="float: left;">日付</span>
+								<div class="input-group mb-3">
+									<input id="myDate" type="date" name="date" th:field="*{date}"
+										class="form-control" aria-describedby="basic-addon2">
+								</div>
+								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('date')}" 
+								th:errors="*{date}" ></div>
+
+
+
+								<span id="inputlabel" style="float: left;">項目</span>
+								<div class="input-group mb-3">
+									<input type="text" name="detail" th:field="*{detail}"
+										class="form-control" aria-describedby="basic-addon2">
+									
+								</div>
+								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('detail')}" 
+								th:errors="*{detail}" ></div>
+
+								
+								<span id="inputlabel" style="float: left;">費用</span>
+								<div class="input-group mb-3">
+									<input type="text" name="amount" th:field="*{amount}"
+										class="form-control" aria-describedby="basic-addon2" >
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2">JPY</span>
+									</div>
+								</div>
+								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('amount')}" 
+								th:errors="*{amount}" ></div>
+							</div>
+							<div class="row">
+								<div class="col" style="display: block; padding-top: 15px;">
+									<input id="cancelbtn" type="reset" value="キャンセル" />
+									<div></div>
+									<input id="submitbtn" type="submit" value="登録" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jp.expense.repo.ExpenseMonthMapper">
+
+
+	<select id="getList" resultType="co.jp.expense.model.ExpenseMonth">
+		select * from
+		expense_month order by date asc
+	</select>
+
+	<select id="findYearAndMonth" resultType="java.lang.Integer"
+		parameterType="int">
+		SELECT id_em FROM expense_month
+		WHERE EXTRACT (MONTH FROM
+		date) = #{month}
+		and EXTRACT(YEAR FROM date) = #{year}
+
+	</select>
+
+	<insert id="insertExpenseMonth">
+		insert into expense_month
+		(date,total)
+		values
+		(#{date},0)
+	</insert>
+
+	<update id="updateExpenseMonthTotal">
+		update expense_month
+		set total = (select sum(amount) from expense_day where id_em = #{id_em})
+		where id_em = #{id_em}
+	</update>
+
+</mapper>

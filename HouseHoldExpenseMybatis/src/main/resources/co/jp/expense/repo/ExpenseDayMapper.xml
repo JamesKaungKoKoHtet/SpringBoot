@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jp.expense.repo.ExpenseDayMapper">
+
+	<insert id="insertExpenseDay">
+		insert into expense_day
+		(id_em,detail,amount,date)
+		values
+		(#{id_em},#{detail},#{amount},#{date})
+	</insert>
+
+	<resultMap type="co.jp.expense.model.ExpenseDay" id="ed">
+		<id column="id_ed" property="id_ed" />
+		<result column="id_em" property="id_em" />
+		<result column="date" property="date" />
+		<result column="detail" property="detail" />
+		<result column="amount" property="amount" />
+	</resultMap>
+
+	<select id="getListByIdEm" resultMap="ed">
+		select * from expense_day
+		where id_em = #{id_em}
+		order by date asc
+	</select>
+
+	<select id="getExpenseDayByIdEd"
+		resultType="co.jp.expense.model.ExpenseDay">
+		select * from expense_day
+		where id_ed = #{id_ed}
+	</select>
+	<update id="updateExpenseDay">
+		update expense_day
+		set detail =
+		#{detail},
+		amount =
+		#{amount},
+		date = #{date}
+		where id_ed = #{id_ed}
+	</update>
+	<select id="getTotalByIdEm" resultType="java.lang.Double">
+		select sum(amount)
+		from
+		expense_day
+		where id_em = #{id_em}
+	</select>
+</mapper>

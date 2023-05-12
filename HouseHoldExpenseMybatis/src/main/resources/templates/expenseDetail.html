@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style type="text/css">
+#header {
+	text-align: center;
+	background: azure;
+}
+
+h1 {
+	padding: 10px;
+}
+</style>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/70b2f77ba6.js"
+	crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>家計管理</title>
+</head>
+<body>
+	<div id="header">
+		<h1>家計管理</h1>
+	</div>
+	<div class="container" style="display: block; max-width: 50%">
+		<div class="row" style="padding: 5px;">
+			<div id="linkTag" class="col">
+				<a th:href="@{/}"><span>家計費一覧</span></a> / 詳細
+			</div>
+			<div class="col-sm-2" style="float: right;">
+				<a th:href="@{/addExpense}" class="btn btn-primary btn-sm"
+					role="button" aria-disabled="true"
+					style="width: 100%; border-radius: 5px;"> <i
+					class="fas fa-plus-circle"></i>&nbsp;追加
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="card" style="border-radius: 15px;">
+					<div class="card-body"
+						style="font-size: 20px; background: gray; color: white; border-radius: 15px;">
+						合計 ( <span th:text="${total}"> </span>  )
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row" style="display: block;">
+			<div class="col" th:each="e: ${expenseDetailList}"
+				style="padding: 5px;">
+				<div class="card" style="border-radius: 15px;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm">
+								<span th:text="${e.date}"></span>
+							</div>
+							<div class="col-sm">
+								<span th:text="${e.detail}"></span>
+							</div>
+							<div class="col-sm-5">
+								<span style="float: right;" th:text="${e.amount}"></span>
+							</div>
+							<div class="col-sm">
+								<a th:href="@{'/update?id=' + ${e.id_ed}}"> <i
+									style="float: right; padding-top: 8%; padding-right: 8%; color: black;"
+									class="fas fa-chevron-right fa-lg"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+</body>
+</html>
