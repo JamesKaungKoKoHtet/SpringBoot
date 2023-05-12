@@ -1,0 +1,22 @@
+-- Table: public.expense_day
+
+-- DROP TABLE IF EXISTS public.expense_day;
+
+CREATE TABLE IF NOT EXISTS public.expense_day
+(
+    id_ed integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    id_em integer NOT NULL,
+    detail character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    amount double precision NOT NULL,
+    date date NOT NULL,
+    CONSTRAINT expense_day_pkey PRIMARY KEY (id_ed),
+    CONSTRAINT fk FOREIGN KEY (id_em)
+        REFERENCES public.expense_month (id_em) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.expense_day
+    OWNER to postgres;

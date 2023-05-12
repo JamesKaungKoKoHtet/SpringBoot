@@ -1,0 +1,16 @@
+-- Table: public.expense_month
+
+-- DROP TABLE IF EXISTS public.expense_month;
+
+CREATE TABLE IF NOT EXISTS public.expense_month
+(
+    id_em integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    date date NOT NULL,
+    total double precision NOT NULL,
+    CONSTRAINT expense_month_pkey PRIMARY KEY (id_em)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.expense_month
+    OWNER to postgres;
