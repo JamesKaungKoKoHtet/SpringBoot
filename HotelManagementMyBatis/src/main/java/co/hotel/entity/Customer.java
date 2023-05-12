@@ -1,4 +1,4 @@
-package co.hotel.model;
+package co.hotel.entity;
 
 import lombok.Data;
 

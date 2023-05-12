@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import co.hotel.model.Login;
+import co.hotel.dto.LoginDto;
+import co.hotel.entity.Room;
 import co.hotel.service.LoginService;
 import co.hotel.service.RoomService;
 
@@ -31,7 +32,9 @@ public class HotelController {
 	}
 
 	@PostMapping(value = "/booking")
-	public String booking() {
+	public String booking(Model model , @ModelAttribute("")Room rooms ) {
+		System.out.println(rooms.getRoom_id());
+		System.out.println(rooms.getRoom_id());
 		System.out.println("login check is called");
 		if (this._loginService.loginCheck()) {
 			return "roomList";
@@ -42,12 +45,12 @@ public class HotelController {
 
 	@GetMapping(value = "/login")
 	public String login(Model model) {
-		model.addAttribute("login", new Login());
+		model.addAttribute("login", new LoginDto());
 		return "login";
 	}
 
 	@PostMapping(value = "/login")
-	public String login(@ModelAttribute Login login) {
+	public String login(@ModelAttribute LoginDto login) {
 		System.out.println("login post is called");
 		this._loginService.login(login);
 		return "redirect:/";

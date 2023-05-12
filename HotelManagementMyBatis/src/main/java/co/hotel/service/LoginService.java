@@ -3,8 +3,8 @@ package co.hotel.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.hotel.dto.LoginDto;
 import co.hotel.mapper.CustomerMapper;
-import co.hotel.model.Login;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -16,7 +16,7 @@ public class LoginService {
 	@Autowired
 	HttpServletRequest request;
 
-	public void login(Login login) {
+	public void login(LoginDto login) {
 		HttpSession session = request.getSession();
 		int user_id = this._customerMapper.getIdByUserNameAndPassword(login.getMail(), login.getPassword());
 		session.setAttribute("userId", user_id);
