@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.hotel.mapper.RoomMapper">
+
+	<select id="getRoomList" resultType="co.hotel.model.Room">
+		SELECT room.room_id,
+		CASE
+		WHEN
+		booking.booking_time IS NOT NULL and
+		booking.checkout_time IS NULL
+		THEN false ELSE true END AS status
+		FROM public.room AS room
+		LEFT JOIN
+		public.booking AS booking
+		ON room.room_id = booking.room_id
+		AND
+		booking.checkout_time IS NULL
+		order by room.room_id;
+
+	</select>
+
+
+</mapper>
