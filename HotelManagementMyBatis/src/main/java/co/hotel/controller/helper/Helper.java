@@ -13,11 +13,12 @@ public class Helper {
 		for (Room r : room) {
 			RoomDto rDto = new RoomDto();
 			rDto.setRoom_id(r.getRoom_id());
-			rDto.setStatus(r.get);
-		
-		
+			rDto.setStatus(r.isStatus());
+			//rDto.setBooked(false);
+			dto.add(rDto);
+
 		}
 
-		return null;
+		return dto;
 	}
 }

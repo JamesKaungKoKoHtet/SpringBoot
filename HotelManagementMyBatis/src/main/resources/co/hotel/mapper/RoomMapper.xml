@@ -3,7 +3,7 @@
 
 <mapper namespace="co.hotel.mapper.RoomMapper">
 
-	<select id="getRoomList" resultType="co.hotel.model.Room">
+	<select id="getRoomList" resultType="co.hotel.entity.Room">
 		SELECT room.room_id,
 		CASE
 		WHEN

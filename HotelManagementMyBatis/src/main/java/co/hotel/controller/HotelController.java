@@ -6,11 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import co.hotel.dto.LoginDto;
 import co.hotel.entity.Room;
 import co.hotel.service.LoginService;
 import co.hotel.service.RoomService;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HotelController {
@@ -19,28 +22,26 @@ public class HotelController {
 	@Autowired
 	LoginService _loginService;
 
-	/**
-	 * 
-	 * @param model
-	 * @return
-	 */
+
 	@GetMapping(value = "/")
 	public String roomList(Model model) {
-		System.out.println("room called");
 		model.addAttribute("rooms", this._roomService.getRoomList());
 		return "roomList";
 	}
 
 	@PostMapping(value = "/booking")
-	public String booking(Model model , @ModelAttribute("")Room rooms ) {
-		System.out.println(rooms.getRoom_id());
-		System.out.println(rooms.getRoom_id());
-		System.out.println("login check is called");
-		if (this._loginService.loginCheck()) {
-			return "roomList";
-		} else {
-			return "redirect:/login";
+	public String booking(@RequestParam List<Integer> selectedRooms) {
+		for(int i =0 ; i<selectedRooms.size(); i++) {
+			System.out.println(selectedRooms.get(i)+"<<<<");
 		}
+		
+//		if (this._loginService.loginCheck()) {
+//			return "roomList";
+//		} else {
+//			return "redirect:/login";
+//		}
+		
+		return "redirect:/";
 	}
 
 	@GetMapping(value = "/login")

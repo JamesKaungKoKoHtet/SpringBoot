@@ -6,6 +6,6 @@ import lombok.Data;
 public class RoomDto {
 	private int room_id;
 	private boolean status;
-	private boolean booking;
+	private boolean booked;
 
 }

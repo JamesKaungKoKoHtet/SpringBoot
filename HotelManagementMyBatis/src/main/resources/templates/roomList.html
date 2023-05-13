@@ -17,11 +17,11 @@
 </head>
 <body>
 	
-<form th:action="@{/booking}" method="post" th:object="${rooms}">
+<form th:action="@{/booking}" method="post">
     <div th:each="r : ${rooms}">
-        <input type="checkbox" class="btn-check" th:id="'btn-check-outlined-' + ${r.room_id}" 
-        autocomplete="off" th:disabled="${not r.status}">
-        <label class="btn btn-outline-primary" th:for="'btn-check-outlined-' + ${r.room_id}">
+        <input type="checkbox" class="btn-check" th:id=" ${r.room_id}" 
+        autocomplete="off" th:disabled="${not r.status}" th:name="selectedRooms" th:value="${r.room_id}">
+        <label class="btn btn-outline-primary" th:for="${r.room_id}">
             <span th:text="${r.room_id}"></span>
         </label>
         <br>
@@ -30,6 +30,7 @@
         Book
     </button>
 </form>
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -61,7 +62,7 @@
             var roomId = checkedBox.id.substring(17);
             // set the selected room in the modal body
             $('#selectedRoom').text("You selected room " + roomId);
-            $('form').submit();
+            //$('form').submit();
         });
     });
 </script>

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Room {
 	
-	 int room_id;
-	 boolean status;
+	 private int room_id;
+	 private boolean status;
 }
