@@ -22,7 +22,6 @@ public class HotelController {
 	@Autowired
 	LoginService _loginService;
 
-
 	@GetMapping(value = "/")
 	public String roomList(Model model) {
 		model.addAttribute("rooms", this._roomService.getRoomList());
@@ -30,18 +29,15 @@ public class HotelController {
 	}
 
 	@PostMapping(value = "/booking")
-	public String booking(@RequestParam List<Integer> selectedRooms) {
-		for(int i =0 ; i<selectedRooms.size(); i++) {
-			System.out.println(selectedRooms.get(i)+"<<<<");
+	public String booking(Model model, @RequestParam List<Integer> selectedRooms) {
+		if (this._loginService.loginCheck()) {
+			this._roomService.bookRooms(selectedRooms);
+			model.addAttribute("message"," を予約しました。");
+			return "roomList";
+		} else {
+			return "redirect:/login";
 		}
-		
-//		if (this._loginService.loginCheck()) {
-//			return "roomList";
-//		} else {
-//			return "redirect:/login";
-//		}
-		
-		return "redirect:/";
+
 	}
 
 	@GetMapping(value = "/login")
@@ -56,6 +52,9 @@ public class HotelController {
 		this._loginService.login(login);
 		return "redirect:/";
 	}
-
+	@GetMapping(value = "/test")
+	public String test() {
+		return "test";
+	}
 
 }

@@ -1,5 +1,7 @@
 package co.hotel.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,19 @@ import co.hotel.entity.Room;
 public class RoomService {
 	@Autowired
 	RoomMapper _roomMapper;
+	@Autowired
+	LoginService _LoginService;
 
 	public List<RoomDto> getRoomList() {
+		int loginId = this._LoginService.loginCheck() ? this._LoginService.storedLogin() : 0;
+		return this._roomMapper.getRoomList(loginId);
+	}
 
-		return Helper.dtoToEntityRoom(this._roomMapper.getRoomList());
+	public void bookRooms(List<Integer> selectedRooms) {
+		for (int i = 0; i < selectedRooms.size(); i++) {
+			this._roomMapper.bookRooms(this._LoginService.storedLogin(),
+					Integer.parseInt(selectedRooms.get(i).toString()), Helper.currentTime());
+		}
+
 	}
 }

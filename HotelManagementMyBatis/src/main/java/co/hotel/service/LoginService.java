@@ -23,10 +23,10 @@ public class LoginService {
 		System.out.println(session.getAttribute("userId"));
 	}
 
-	public String storedLogin() {
+	public int storedLogin() {
 		HttpSession session = request.getSession();
 
-		return session.getAttribute("userId").toString();
+		return  Integer.parseInt(session.getAttribute("userId").toString());
 	}
 
 	public boolean loginCheck() {

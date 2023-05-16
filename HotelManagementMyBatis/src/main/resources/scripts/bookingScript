@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.booking
     booking_time date,
     checkout_time date,
     CONSTRAINT booking_pkey PRIMARY KEY (bk_id),
+    CONSTRAINT unique_booking UNIQUE (user_id, room_id, booking_time),
     CONSTRAINT room_id FOREIGN KEY (room_id)
         REFERENCES public.room (room_id) MATCH SIMPLE
         ON UPDATE NO ACTION

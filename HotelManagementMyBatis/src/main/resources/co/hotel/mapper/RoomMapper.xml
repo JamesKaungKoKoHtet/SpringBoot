@@ -3,13 +3,23 @@
 
 <mapper namespace="co.hotel.mapper.RoomMapper">
 
-	<select id="getRoomList" resultType="co.hotel.entity.Room">
+	<resultMap type="co.hotel.dto.RoomDto" id="room">
+		<id column="room_id" property="room_id" />
+		<result column="status" property="status" />
+		<result column="booked" property="booked" />
+	</resultMap>
+
+	<select id="getRoomList" resultMap="room">
 		SELECT room.room_id,
 		CASE
 		WHEN
 		booking.booking_time IS NOT NULL and
 		booking.checkout_time IS NULL
-		THEN false ELSE true END AS status
+		THEN
+		false ELSE true END AS status,
+		Case
+		When booking.user_id = #{user_id}
+		Then true else false end as booked
 		FROM public.room AS room
 		LEFT JOIN
 		public.booking AS booking
@@ -17,8 +27,14 @@
 		AND
 		booking.checkout_time IS NULL
 		order by room.room_id;
-
 	</select>
 
+	<insert id="bookRooms">
+		INSERT INTO booking 
+		(user_id, room_id, booking_time)
+		VALUES (#{userId}, #{roomId}, #{date})
+		ON CONFLICT ON CONSTRAINT
+		unique_booking DO NOTHING;
+	</insert>
 
 </mapper>
