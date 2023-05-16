@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.hotel.dto.LoginDto;
 import co.hotel.entity.Room;
@@ -24,16 +25,18 @@ public class HotelController {
 
 	@GetMapping(value = "/")
 	public String roomList(Model model) {
+		System.out.println("called");
 		model.addAttribute("rooms", this._roomService.getRoomList());
 		return "roomList";
 	}
 
 	@PostMapping(value = "/booking")
-	public String booking(Model model, @RequestParam List<Integer> selectedRooms) {
+	public String booking(Model model, @RequestParam List<Integer> selectedRooms , RedirectAttributes redirAttr) {
 		if (this._loginService.loginCheck()) {
+
 			this._roomService.bookRooms(selectedRooms);
-			model.addAttribute("message"," を予約しました。");
-			return "roomList";
+			redirAttr.addAttribute("bookedRooms",selectedRooms);
+			return "redirect:/";
 		} else {
 			return "redirect:/login";
 		}
