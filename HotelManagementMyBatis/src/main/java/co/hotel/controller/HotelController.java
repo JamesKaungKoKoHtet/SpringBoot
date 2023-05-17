@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.hotel.controller.helper.Helper;
 import co.hotel.dto.LoginDto;
 import co.hotel.entity.Room;
 import co.hotel.service.LoginService;
@@ -35,7 +36,8 @@ public class HotelController {
 		if (this._loginService.loginCheck()) {
 
 			this._roomService.bookRooms(selectedRooms);
-			redirAttr.addAttribute("bookedRooms",selectedRooms);
+			
+			redirAttr.addFlashAttribute("bookedRooms",Helper.selectedRoomList(selectedRooms));
 			return "redirect:/";
 		} else {
 			return "redirect:/login";

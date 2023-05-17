@@ -28,4 +28,12 @@ public class Helper {
 		Date currentDate = new Date();
 		return new Timestamp(currentDate.getTime());
 	}
+
+	public static String selectedRoomList(List<Integer> selectedRooms) {
+		String selectedRoomList ="";
+		for(int i : selectedRooms) {
+			selectedRoomList+="Room "+i+", ";
+		}
+		return selectedRoomList+"を予約しました。";
+	}
 }
