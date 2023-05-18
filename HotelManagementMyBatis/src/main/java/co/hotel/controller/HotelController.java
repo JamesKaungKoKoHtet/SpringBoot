@@ -11,10 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.hotel.controller.helper.Helper;
 import co.hotel.dto.LoginDto;
-import co.hotel.entity.Room;
 import co.hotel.service.LoginService;
 import co.hotel.service.RoomService;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
