@@ -21,13 +21,13 @@
 <style type="text/css">
 .btn-outline-primary { 
 	--bs-btn-color: black; 
-	--bs-btn-border-color: grey;
+	--bs-btn-border-color: grey; 
 	--bs-btn-hover-color: #fff; 
 	--bs-btn-hover-bg: #0dfd80; 
 	--bs-btn-hover-border-color: #0dfd80; 
 	--bs-btn-focus-shadow-rgb: 13, 110, 253; 
-	--bs-btn-active-color: #fff; 
-	--bs-btn-active-bg: #0dfd80; 
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: #0dfd80;
 	--bs-btn-active-border-color: #0dfd80; 
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); 
 	--bs-btn-disabled-color: #0dfd80; 
@@ -50,9 +50,9 @@
 
 </head>
 <body>
-	<!--th:disabled="${not r.status and not r.booked}" th:checked="${r.booked}"-->
 	<form th:action="@{/booking}" method="post" id="submitForm">
-		<div th:each="r : ${rooms}">
+		<div th:each="r : ${rooms}"
+			th:onclick="${r.booked} ? 'cancelBook(\'' + ${r.room_id} + '\')' : null">
 			<input type="checkbox"
 				th:classappend="${r.booked} ? 'btn-check booked' : 'btn-check'"
 				th:id="${r.room_id}" autocomplete="off"
@@ -85,6 +85,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- booking error confirmation -->
 		<div class="modal fade" id="bookingErrorModal" tabindex="-1"
 			aria-labelledby="bookingErrorModal" aria-hidden="true">
@@ -117,10 +118,49 @@
 			</div>
 		</div>
 
+
 	</form>
+	<div th:if="${bookedRooms}">
+		<script th:inline="javascript">
+			var myModal = new bootstrap.Modal(document
+					.getElementById('bookingCompleteModal'));
+			myModal.show();
+		</script>
+	</div>
+
+	<!-- booking cancel confirmation -->
+	<div class="modal fade" id="bookingCancelModal" tabindex="-1"
+		aria-labelledby="bookingCancelModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">部屋予約キャンセル</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<form th:action="@{/cancel}" method="post">
+						<input class="hidden input" id="cancelRoom" name="cancelRoom"
+							type="hidden">
+						<button type="submit" class="btn btn-primary">
+							<strong>OK</strong>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>
-		
-	
+		function cancelBook(roomId) {
+
+			var modal = document.getElementById('bookingCancelModal');
+			var modalBody = modal.querySelector('.modal-body');
+			var roomString = "Room " + roomId;
+			modalBody.textContent = roomString + 'の予約をキャンセルします、よろしいでしょうか？';
+			document.getElementById("cancelRoom").value = roomId;
+			$('#bookingCancelModal').modal('show');
+		}
 		function confirmBooking() {
 			var inputElements = document.getElementsByTagName('input');
 			var isChecked = false;

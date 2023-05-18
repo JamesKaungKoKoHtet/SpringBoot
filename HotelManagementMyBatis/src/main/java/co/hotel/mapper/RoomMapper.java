@@ -16,4 +16,7 @@ public interface RoomMapper {
 
 	public void bookRooms(int userId, int roomId, Timestamp date);
 
+	public void checkOutRoom(int userId, int roomId, Timestamp date);
+
+
 }

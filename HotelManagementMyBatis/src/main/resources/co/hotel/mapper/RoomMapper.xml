@@ -30,11 +30,16 @@
 	</select>
 
 	<insert id="bookRooms">
-		INSERT INTO booking 
+		INSERT INTO booking
 		(user_id, room_id, booking_time)
-		VALUES (#{userId}, #{roomId}, #{date})
-		ON CONFLICT ON CONSTRAINT
-		unique_booking DO NOTHING;
+		VALUES (#{userId}, #{roomId}, #{date});
 	</insert>
+
+	<update id="checkOutRoom">
+		UPDATE booking
+		SET checkout_time = #{date}
+		WHERE user_id = #{userId}
+		and room_id = #{roomId}
+	</update>
 
 </mapper>

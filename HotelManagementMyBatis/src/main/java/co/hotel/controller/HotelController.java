@@ -44,6 +44,12 @@ public class HotelController {
 		}
 
 	}
+	@PostMapping(value = "/cancel")
+	public String booking(@RequestParam Integer cancelRoom ) {
+		this._roomService.checkOutRoom(cancelRoom);
+		return "redirect:/";
+
+	}
 
 	@GetMapping(value = "/login")
 	public String login(Model model) {

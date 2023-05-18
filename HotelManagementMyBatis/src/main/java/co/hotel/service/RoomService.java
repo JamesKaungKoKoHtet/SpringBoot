@@ -29,4 +29,9 @@ public class RoomService {
 		}
 
 	}
+
+	public void checkOutRoom(Integer cancelRoom) {
+		this._roomMapper.checkOutRoom(this._LoginService.storedLogin(),cancelRoom.intValue(),Helper.currentTime());
+		
+	}
 }
