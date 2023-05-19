@@ -65,24 +65,20 @@ h1 {
 						<a th:href="@{/}"><span>家計費一覧</span></a> / 登録
 					</div>
 					<div style="text-align: center; display: block;">
-
 						<form th:action="@{/addExpense}" method="post"
 							th:object=${expenseDto}>
 							<div
 								style="border: 1px; border-style: groove; border-radius: 15px; padding: 35px;">
 								<span id="inputlabel" style="float: left;">日付</span>
 								<div class="input-group mb-3">
-									<input type="date" name="date"  class="form-control"
-										aria-describedby="basic-addon2" id="myDate">
+									<input type="date" name="date"  class="form-control" aria-describedby="basic-addon2" id="myDate">
 								</div>
 								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('date')}" th:errors="*{date}" ></div>
 
 
 								<span id="inputlabel" style="float: left;">項目</span>
 								<div class="input-group mb-3">
-									<input type="text" name="detail"  class="form-control"
-										aria-describedby="basic-addon2">
-									
+									<input type="text" name="detail"  class="form-control" aria-describedby="basic-addon2">
 								</div>
 								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" ></div>
 
@@ -93,11 +89,10 @@ h1 {
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2">JPY</span>
 									</div>
-									
 								</div>
 								<div id="err" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" ></div>
-
 							</div>
+							
 							<div class="row">
 								<div class="col" style="display: block; padding-top: 15px;">
 									<input id="cancelbtn" type="reset" value="キャンセル" />
@@ -108,7 +103,6 @@ h1 {
 						</form>
 					</div>
 				</div>
-
 			</div>
 		</div>
 

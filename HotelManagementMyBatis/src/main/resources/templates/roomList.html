@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,13 +10,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-	crossorigin="anonymous" />
+	rel="stylesheet" />
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <style type="text/css">
@@ -36,6 +33,7 @@
 	--bs-gradient: none;
 }
 
+
 .unavailable {
 	color: black;
 	background: grey;
@@ -45,23 +43,41 @@
 	color: white;
 	background: green;
 }
+
 </style>
 </head>
 
 </head>
-<body>
+<body class="container">
 	<form th:action="@{/booking}" method="post" id="submitForm">
-		<div th:each="r : ${rooms}"
-			th:onclick="${r.booked} ? 'cancelBook(\'' + ${r.room_id} + '\')' : null">
+	<div class="row d-flex flex-row justify-content-between parent"
+	style="margin: 0px 200px 0px 200px;"
+	>
+	 
+		<div style="margin-bottom: 5%; width: 175px; margin-right: 10px;"
+			class="col-sm-3"
+		 th:each="r : ${rooms}" th:onclick="${r.booked} ? 'cancelBook(\'' + ${r.room_id} + '\')' : null"
+			>
+			
 			<input type="checkbox"
 				th:classappend="${r.booked} ? 'btn-check booked' : 'btn-check'"
 				th:id="${r.room_id}" autocomplete="off"
 				th:disabled="${not r.status}" th:name="selectedRooms"
-				th:value="${r.room_id}"> <label th:id="${r.room_id}"
+				th:value="${r.room_id}"> 
+				
+				<label 
+				style="width: 150px;height: 140px;padding-top: 52px;"
+				th:id="${r.room_id}"
 				th:classappend="${r.booked ? 'btn btn-outline-success booked' : (r.status ? 'btn btn-outline-primary' : 'btn btn-outline-primary unavailable')} "
-				th:for="${r.room_id}"> <span th:text="${r.room_id}"></span>
-			</label> <br>
+				th:for="${r.room_id}"
+				>
+			 <span th:text="${r.room_id}"></span>
+			</label>
+			
+			
 		</div>
+		
+	</div>
 		<button type="button" th:onclick="confirmBooking()"
 			class="btn btn-primary">BOOK</button>
 
@@ -76,7 +92,7 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
-					<div class="modal-body">...</div>
+					<div class="modal-body"></div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">キャンセル</button>
@@ -117,7 +133,9 @@
 				</div>
 			</div>
 		</div>
-
+		<script th:inline="javascript">
+		
+		</script>
 
 	</form>
 	<div th:if="${bookedRooms}">
@@ -152,15 +170,16 @@
 		</div>
 	</div>
 	<script>
-		function cancelBook(roomId) {
 
-			var modal = document.getElementById('bookingCancelModal');
-			var modalBody = modal.querySelector('.modal-body');
-			var roomString = "Room " + roomId;
-			modalBody.textContent = roomString + 'の予約をキャンセルします、よろしいでしょうか？';
-			document.getElementById("cancelRoom").value = roomId;
-			$('#bookingCancelModal').modal('show');
-		}
+	function cancelBook(roomId) {
+
+		var modal = document.getElementById('bookingCancelModal');
+		var modalBody = modal.querySelector('.modal-body');
+		var roomString = "Room " + roomId;
+		modalBody.textContent = roomString + 'の予約をキャンセルします、よろしいでしょうか？';
+		document.getElementById("cancelRoom").value = roomId;
+		$('#bookingCancelModal').modal('show');
+	}
 		function confirmBooking() {
 			var inputElements = document.getElementsByTagName('input');
 			var isChecked = false;
@@ -182,25 +201,19 @@
 				var roomArray = checkedValues.map(function(value) {
 					return 'Room ' + value;
 				});
-
 				// Create a new string by joining the roomArray elements with commas and a space
 				var roomString = roomArray.join(', ');
-
 				var modal = document.getElementById('bookingConfirmModal');
 				var modalBody = modal.querySelector('.modal-body');
 				modalBody.textContent = roomArray + 'を予約しますか？';
-
 				$('#bookingConfirmModal').modal('show');
 				//document.getElementById("submitForm").submit();
 			} else {
 				// No checkbox is checked
 				$('#bookingErrorModal').modal('show');
-
 			}
 		}
 	</script>
 </body>
-
-
 
 </html>
