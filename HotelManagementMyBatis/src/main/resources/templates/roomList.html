@@ -43,11 +43,24 @@ width: 150px;height: 140px;padding-top: 52px;
 </style>
 </head>
 
-</head>
-<body class="container">
-<nav class="navbar bg-info justify-content-center mb-2">
-		<h3 class="text-white">家計費管理</h3>
+
+<body>
+<nav class="navbar justify-content-center bg-light mb-5">
+		<a class="navbar-brand" th:href="@{/}">部屋の予約</a>
+		<div class="col-4"></div>
+		<ul class="nav">
+			<li class="nav-item"><a class="nav-link" th:href="@{/}">部屋一覧</a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:if="${user == null}" th:href="@{/login}">ログイン</a></li>
+			<li class="nav-item dropdown" th:if="${user != null}"><a
+				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+				role="button" aria-expanded="false" th:text=${user}></a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" th:href="@{/logout}">ログアウト</a></li>
+				</ul></li>
+		</ul>
 	</nav>
+<div class="container">
 	<form th:action="@{/booking}" method="post" id="submitForm">
 	<div id="row" class="row d-flex flex-row justify-content-between parent">
 	 
@@ -70,10 +83,12 @@ width: 150px;height: 140px;padding-top: 52px;
 			
 			
 		</div>
-		
+		<div class="d-grid mt-4">
+			<a th:if="${user == null}" th:href="@{/login}" class="btn btn-primary">予約</a>
+			<button type="button" th:if="${user != null}" th:onclick="confirmBooking()" class="btn btn-primary">予約</button>
+		</div>
 	</div>
-		<button type="button" th:onclick="confirmBooking()"
-			class="btn btn-primary">予約</button>
+
 
 
 		<!-- booking confirmation -->
@@ -163,6 +178,9 @@ width: 150px;height: 140px;padding-top: 52px;
 			</div>
 		</div>
 	</div>
+	
+	
+	
 	<script>
 
 	function cancelBook(roomId) {
@@ -175,6 +193,7 @@ width: 150px;height: 140px;padding-top: 52px;
 		$('#bookingCancelModal').modal('show');
 	}
 		function confirmBooking() {
+			
 			var inputElements = document.getElementsByTagName('input');
 			var isChecked = false;
 			var checkedValues = [];
@@ -191,7 +210,6 @@ width: 150px;height: 140px;padding-top: 52px;
 			}
 
 			if (isChecked) {
-				// At least one checkbox is checked
 				var roomArray = checkedValues.map(function(value) {
 					return 'Room ' + value;
 				});
@@ -208,6 +226,7 @@ width: 150px;height: 140px;padding-top: 52px;
 			}
 		}
 	</script>
+	</div>
 </body>
 
 </html>

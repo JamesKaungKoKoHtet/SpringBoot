@@ -3,11 +3,16 @@
 
 <mapper namespace="co.hotel.mapper.CustomerMapper">
 
-	<select id="getIdByUserNameAndPassword"
+	<select id="getIdByUserMailAndPassword"
 		resultType="java.lang.Integer">
 		select user_id from customer
 		where mail = #{mail} and
 		password = #{password}
+	</select>
+	<select id="getUserNameById" resultType="java.lang.String">
+		select name from
+		customer
+		where user_id = #{id}
 	</select>
 
 </mapper>

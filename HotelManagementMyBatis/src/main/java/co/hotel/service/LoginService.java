@@ -18,14 +18,13 @@ public class LoginService {
 
 	public void login(LoginDto login) {
 		HttpSession session = request.getSession();
-		int user_id = this._customerMapper.getIdByUserNameAndPassword(login.getMail(), login.getPassword());
+		int user_id = this._customerMapper.getIdByUserMailAndPassword(login.getMail(), login.getPassword());
 		session.setAttribute("userId", user_id);
 		System.out.println(session.getAttribute("userId"));
 	}
 
 	public int storedLogin() {
 		HttpSession session = request.getSession();
-
 		return  Integer.parseInt(session.getAttribute("userId").toString());
 	}
 
@@ -33,12 +32,14 @@ public class LoginService {
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("userId");
 		if (obj == null) {
-			System.out.println("OBJ is null");
 			return false;
 		} else {
-			System.out.println(obj.toString()+"<<<<<<<<<<<<<");
 			return true;
 		}
+	}
+	
+	public String loginUserName() {
+		return this._customerMapper.getUserNameById(storedLogin());
 	}
 
 }

@@ -29,7 +29,7 @@ public class Helper {
 		return new Timestamp(currentDate.getTime());
 	}
 
-	public static String selectedRoomList(List<Integer> selectedRooms) {
+	public static String roomListText(List<Integer> selectedRooms) {
 		String selectedRoomList ="";
 		for(int i : selectedRooms) {
 			selectedRoomList+="Room "+i+", ";

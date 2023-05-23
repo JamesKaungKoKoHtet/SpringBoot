@@ -24,26 +24,23 @@ public class HotelController {
 
 	@GetMapping(value = "/")
 	public String roomList(Model model) {
-		System.out.println("called");
+		if (this._loginService.loginCheck()) {
+			model.addAttribute("user", this._loginService.loginUserName());
+		}
 		model.addAttribute("rooms", this._roomService.getRoomList());
 		return "roomList";
 	}
 
 	@PostMapping(value = "/booking")
-	public String booking(Model model, @RequestParam List<Integer> selectedRooms , RedirectAttributes redirAttr) {
-		if (this._loginService.loginCheck()) {
-
-			this._roomService.bookRooms(selectedRooms);
-			
-			redirAttr.addFlashAttribute("bookedRooms",Helper.selectedRoomList(selectedRooms));
-			return "redirect:/";
-		} else {
-			return "redirect:/login";
-		}
+	public String booking(Model model, @RequestParam List<Integer> selectedRooms, RedirectAttributes redirAttr) {
+		this._roomService.bookRooms(selectedRooms);
+		redirAttr.addFlashAttribute("bookedRooms", Helper.roomListText(selectedRooms));
+		return "redirect:/";
 
 	}
+
 	@PostMapping(value = "/cancel")
-	public String booking(@RequestParam Integer cancelRoom ) {
+	public String booking(@RequestParam Integer cancelRoom) {
 		this._roomService.checkOutRoom(cancelRoom);
 		return "redirect:/";
 
@@ -51,19 +48,19 @@ public class HotelController {
 
 	@GetMapping(value = "/login")
 	public String login(Model model) {
+		if (this._loginService.loginCheck()) {
+			return "redirect:/";
+		}
 		model.addAttribute("login", new LoginDto());
 		return "login";
 	}
 
 	@PostMapping(value = "/login")
-	public String login(@ModelAttribute LoginDto login) {
-		System.out.println("login post is called");
+	public String login(@ModelAttribute LoginDto login, RedirectAttributes redirAttr) {
 		this._loginService.login(login);
+		redirAttr.addFlashAttribute("user", this._loginService.loginUserName());
 		return "redirect:/";
 	}
-	@GetMapping(value = "/test")
-	public String test() {
-		return "test";
-	}
+
 
 }
