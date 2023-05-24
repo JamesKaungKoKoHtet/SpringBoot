@@ -1,0 +1,79 @@
+-- Database: hotel_management
+
+-- DROP DATABASE IF EXISTS hotel_management;
+
+CREATE DATABASE hotel_management
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.UTF-8'
+    LC_CTYPE = 'en_US.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+    
+	-- Table: public.room
+
+	-- DROP TABLE IF EXISTS public.room;
+
+	CREATE TABLE IF NOT EXISTS public.room
+	(
+		room_id integer NOT NULL,
+		CONSTRAINT room_pkey PRIMARY KEY (room_id)
+	)
+
+	TABLESPACE pg_default;
+
+	ALTER TABLE IF EXISTS public.room
+		OWNER to postgres;
+		
+	INSERT INTO public.room (room_id) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12);
+	
+	
+	
+	-- Table: public.customer
+
+-- DROP TABLE IF EXISTS public.customer;
+
+CREATE TABLE IF NOT EXISTS public.customer
+(
+    user_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    mail character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_pkey PRIMARY KEY (user_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.customer
+    OWNER to postgres;
+    
+    
+    -- Table: public.booking
+
+-- DROP TABLE IF EXISTS public.booking;
+
+CREATE TABLE IF NOT EXISTS public.booking
+(
+    bk_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    user_id integer NOT NULL,
+    room_id integer NOT NULL,
+    booking_time date,
+    checkout_time date,
+    CONSTRAINT booking_pkey PRIMARY KEY (bk_id),
+    CONSTRAINT room_id FOREIGN KEY (room_id)
+        REFERENCES public.room (room_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public.customer (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.booking
+    OWNER to postgres;
