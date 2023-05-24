@@ -16,11 +16,15 @@ public class LoginService {
 	@Autowired
 	HttpServletRequest request;
 
-	public void login(LoginDto login) {
+	public boolean login(LoginDto login) {
 		HttpSession session = request.getSession();
-		int user_id = this._customerMapper.getIdByUserMailAndPassword(login.getMail(), login.getPassword());
-		session.setAttribute("userId", user_id);
-		System.out.println(session.getAttribute("userId"));
+		try {
+		session.setAttribute("userId",this._customerMapper.getIdByUserMailAndPassword(login.getMail(), login.getPassword()));
+		return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	public int storedLogin() {

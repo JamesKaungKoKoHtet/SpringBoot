@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
@@ -16,7 +15,6 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
-
 <style type="text/css">
 .custom-container {
 	display: flex;
@@ -41,7 +39,6 @@
 	border-radius: 5px;
 }
 </style>
-
 </head>
 <body>
 	<nav class="navbar justify-content-center bg-light mb-5">
@@ -61,32 +58,42 @@
 	</nav>
 	<div class="container">
 		<div class="card-body">
-			<form th:action="@{/login}" method="post" th:object=${login}>
+			<form th:action="@{/singUp}" method="post" th:object=${singUp}>
 
-				<div class="alert alert-danger" th:if="${error != null}"
-					th:text="${error}"></div>
 				<div class="mb-4 mt-2">
-					<h2>ログイン</h2>
+					<h2>アカウント登録</h2>
 				</div>
 				<div class="mb-4 mt-2">
-					<label for="email" class="form-label">メール</label> <input
-						type="text" class="form-control" id="mail" name="mail">
+					<label for="email" class="form-label">氏名</label> 
+						<small class="m-3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+						<input
+						type="text" class="form-control" id="name" name="name">
 				</div>
+				<div class="mb-4 mt-2">
+					<label for="email" class="form-label">メール</label> 
+					<small class="m-3 text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></small>
+					<input type="text" class="form-control" id="mail" name="mail"> 
+ 				</div>
+				
 				<div class="mb-4">
-					<label for="password" class="form-label">パスワード</label> <input
-						type="password" class="form-control" id="password" name="password">
+					<label for="password" class="form-label">パスワード</label> 
+					<small class="m-3 text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+					<input type="password" class="form-control" id="password" name="password" oninput="toggleConfirmPassword()">
+				</div>
+				
+				<div class="mb-4">
+					<label for="password" class="form-label">パスワード確認</label> 
+					<small id="message" class="m-3 text-danger" th:errors="${singUp.confirmPassword}"></small>
+					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
 				</div>
 				<div class="d-grid mb-4">
 					<button type="submit" class="btn btn-primary btn-block">
-						<small><strong>ログイン</strong></small>
+						<small><strong>登録</strong></small>
 					</button>
 				</div>
-				<div class="mb-4 d-flex justify-content-center">
-					<a th:href="@{/singUp}"><small>アカウント登録</small></a>
-				</div>
-
 			</form>
 		</div>
 	</div>
+	
 </body>
 </html>

@@ -3,6 +3,8 @@ package co.hotel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.hotel.controller.helper.Helper;
 import co.hotel.dto.LoginDto;
+import co.hotel.dto.SignUpDto;
 import co.hotel.service.LoginService;
 import co.hotel.service.RoomService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @Controller
@@ -50,17 +56,51 @@ public class HotelController {
 	public String login(Model model) {
 		if (this._loginService.loginCheck()) {
 			return "redirect:/";
+		} else {
+			model.addAttribute("login", new LoginDto());
+			return "login";
 		}
-		model.addAttribute("login", new LoginDto());
-		return "login";
 	}
 
 	@PostMapping(value = "/login")
-	public String login(@ModelAttribute LoginDto login, RedirectAttributes redirAttr) {
-		this._loginService.login(login);
-		redirAttr.addFlashAttribute("user", this._loginService.loginUserName());
+	public String login(Model model, @ModelAttribute("login") LoginDto login, RedirectAttributes redirAttr) {
+
+		if (!this._loginService.login(login)) {
+			model.addAttribute("error", "正しい認証情報を入力してください。");
+			return "login";
+		} else {
+			redirAttr.addFlashAttribute("user", this._loginService.loginUserName());
+			return "redirect:/";
+		}
+
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		session.removeAttribute("userId");
 		return "redirect:/";
 	}
 
+	@GetMapping("/singUp")
+	public String signup(Model model) {
+		System.err.println("singup get called");
+		model.addAttribute("singUp", new SignUpDto());
+		return "singUp";
+	}
 
+	@PostMapping("/singUp")
+	public String signup(Model model , @Valid @ModelAttribute("singUp") SignUpDto signup, BindingResult result) {
+		System.err.println("singup post called");
+		if (!signup.getPassword().equals(signup.getConfirmPassword())) {
+			result.addError(new FieldError("signup", "confirmPassword", "*パスワードが一致しません 。"));
+		}
+		
+		if(result.hasErrors()) {
+			System.err.println("has error");
+			return "singUp";
+		}
+		//do smth
+		return "redirect:/";
+	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 import co.hotel.dto.RoomDto;
 import co.hotel.entity.Room;
 
@@ -16,11 +17,8 @@ public class Helper {
 			RoomDto rDto = new RoomDto();
 			rDto.setRoom_id(r.getRoom_id());
 			rDto.setStatus(r.isStatus());
-			// rDto.setBooked(false);
 			dto.add(rDto);
-
 		}
-
 		return dto;
 	}
 
@@ -36,4 +34,5 @@ public class Helper {
 		}
 		return selectedRoomList+"を予約しました。";
 	}
+
 }
