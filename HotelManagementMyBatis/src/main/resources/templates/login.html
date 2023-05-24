@@ -37,14 +37,15 @@
 .card-body h2 {
 	text-align: center;
 }
-.form-control{
+
+.form-control {
 	border-radius: 5px;
 }
 </style>
 
 </head>
 <body>
-	<nav class="navbar justify-content-center bg-light mb-5">
+	<nav class="navbar justify-content-center bg-light mb-4">
 		<a class="navbar-brand" th:href="@{/}">部屋の予約</a>
 		<div class="col-4"></div>
 		<ul class="nav">
@@ -84,8 +85,31 @@
 				<div class="mb-4 d-flex justify-content-center">
 					<a th:href="@{/singUp}"><small>アカウント登録</small></a>
 				</div>
-
+			<!-- Sign Up Success -->
+			<div class="modal fade" id="signUpSuccessModal" tabindex="-1"
+				aria-labelledby="signUpSuccessModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">ありがとう!</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<span th:text="${singUpSuccess}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${singUpSuccess}">
+				<script th:inline="javascript">
+					var myModal = new bootstrap.Modal(document
+							.getElementById('signUpSuccessModal'));
+					myModal.show();
+				</script>
+			</div>
 			</form>
+			
 		</div>
 	</div>
 </body>

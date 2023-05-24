@@ -45,7 +45,7 @@ width: 150px;height: 140px;padding-top: 52px;
 
 
 <body>
-<nav class="navbar justify-content-center bg-light mb-5">
+<nav class="navbar justify-content-center bg-light mb-4">
 		<a class="navbar-brand" th:href="@{/}">部屋の予約</a>
 		<div class="col-4"></div>
 		<ul class="nav">
@@ -65,20 +65,20 @@ width: 150px;height: 140px;padding-top: 52px;
 	<div id="row" class="row d-flex flex-row justify-content-between parent">
 	 
 		<div id="col" class="col-sm-3"  th:each="r : ${rooms}" 
-		th:onclick="${r.booked} ? 'cancelBook(\'' + ${r.room_id} + '\')' : null">
+		th:onclick="${r.booked} ? 'cancelBook(\'' + ${r.roomId} + '\')' : null">
 			
 			<input type="checkbox"
 				th:classappend="${r.booked} ? 'btn-check booked' : 'btn-check'"
-				th:id="${r.room_id}" autocomplete="off"
+				th:id="${r.roomId}" autocomplete="off"
 				th:disabled="${not r.status}" th:name="selectedRooms"
-				th:value="${r.room_id}"> 
+				th:value="${r.roomId}"> 
 				
 				<label 
-				th:id="${r.room_id}"
+				th:id="${r.roomId}"
 				th:classappend="${r.booked ? 'btn btn-outline-success booked' : (r.status ? 'btn btn-outline-success' : 'btn btn-outline-primary unavailable')} "
-				th:for="${r.room_id}"
+				th:for="${r.roomId}"
 				>
-			 <span th:text="${r.room_id}"></span>
+			 <span th:text="${r.roomId}"></span>
 			</label>
 			
 			

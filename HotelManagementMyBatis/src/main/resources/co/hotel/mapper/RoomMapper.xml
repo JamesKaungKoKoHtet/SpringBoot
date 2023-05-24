@@ -4,7 +4,7 @@
 <mapper namespace="co.hotel.mapper.RoomMapper">
 
 	<resultMap type="co.hotel.dto.RoomDto" id="room">
-		<id column="room_id" property="room_id" />
+		<id column="room_id" property="roomId" />
 		<result column="status" property="status" />
 		<result column="booked" property="booked" />
 	</resultMap>

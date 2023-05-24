@@ -14,5 +14,16 @@
 		customer
 		where user_id = #{id}
 	</select>
+	<select id="findMail" resultType="java.lang.Boolean">
+		SELECT COUNT(*) > 0 AS exist
+		FROM customer
+		WHERE mail = #{mail};
+	</select>
+	<insert id="signUp">
+		INSERT INTO customer(
+		name, mail, password)
+		VALUES (
+		#{name},#{mail},#{password});
+	</insert>
 
 </mapper>

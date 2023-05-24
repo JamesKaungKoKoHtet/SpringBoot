@@ -1,38 +1,34 @@
 package co.hotel.controller.helper;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
-import co.hotel.dto.RoomDto;
-import co.hotel.entity.Room;
-
+/**
+ * 
+ * @author james
+ * Helper class for external Library and common methods
+ */
 public class Helper {
-	public static List<RoomDto> dtoToEntityRoom(List<Room> room) {
-		List<RoomDto> dto = new ArrayList<>();
-
-		for (Room r : room) {
-			RoomDto rDto = new RoomDto();
-			rDto.setRoom_id(r.getRoom_id());
-			rDto.setStatus(r.isStatus());
-			dto.add(rDto);
-		}
-		return dto;
-	}
-
+	/**
+	 * 
+	 * @return current time with Timestamp datatype
+	 */
 	public static Timestamp currentTime() {
 		Date currentDate = new Date();
 		return new Timestamp(currentDate.getTime());
 	}
-
+	
+	/**
+	 * 
+	 * @param selectedRooms : selected room id data from HotelController booking method
+	 * @return String of Room id and booking completed text
+	 */
 	public static String roomListText(List<Integer> selectedRooms) {
-		String selectedRoomList ="";
-		for(int i : selectedRooms) {
-			selectedRoomList+="Room "+i+", ";
+		String selectedRoomList = "";
+		for (int i : selectedRooms) {
+			selectedRoomList += "Room " + i + ", ";
 		}
-		return selectedRoomList+"を予約しました。";
+		return selectedRoomList + "を予約しました。";
 	}
 
 }

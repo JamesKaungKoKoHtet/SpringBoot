@@ -20,9 +20,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
 }
-
 .card-body {
 	width: 50%;
 	margin-left: 300px;
@@ -31,17 +29,21 @@
 	padding: 50px;
 	border-radius: 15px;
 }
-
-.card-body h2 {
+.card-body h2, .modal-body span {
 	text-align: center;
 }
-.form-control{
+.form-control {
 	border-radius: 5px;
+}
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 </style>
 </head>
 <body>
-	<nav class="navbar justify-content-center bg-light mb-5">
+	<nav class="navbar justify-content-center bg-light mb-4">
 		<a class="navbar-brand" th:href="@{/}">部屋の予約</a>
 		<div class="col-4"></div>
 		<ul class="nav">
@@ -64,36 +66,65 @@
 					<h2>アカウント登録</h2>
 				</div>
 				<div class="mb-4 mt-2">
-					<label for="email" class="form-label">氏名</label> 
-						<small class="m-3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-						<input
-						type="text" class="form-control" id="name" name="name">
+					<label for="email" class="form-label">氏名</label> <small
+						class="m-3 text-danger" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}"></small> <input type="text"
+						class="form-control" id="name" name="name">
 				</div>
 				<div class="mb-4 mt-2">
-					<label for="email" class="form-label">メール</label> 
-					<small class="m-3 text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></small>
-					<input type="text" class="form-control" id="mail" name="mail"> 
- 				</div>
-				
-				<div class="mb-4">
-					<label for="password" class="form-label">パスワード</label> 
-					<small class="m-3 text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
-					<input type="password" class="form-control" id="password" name="password" oninput="toggleConfirmPassword()">
+					<label for="email" class="form-label">メール</label> <small
+						class="m-3 text-danger" th:if="${#fields.hasErrors('mail')}"
+						th:errors="*{mail}"></small> <input type="text"
+						class="form-control" id="mail" name="mail">
 				</div>
-				
+
 				<div class="mb-4">
-					<label for="password" class="form-label">パスワード確認</label> 
-					<small id="message" class="m-3 text-danger" th:errors="${singUp.confirmPassword}"></small>
-					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+					<label for="password" class="form-label">パスワード</label> <small
+						class="m-3 text-danger" th:if="${#fields.hasErrors('password')}"
+						th:errors="*{password}"></small> <input type="password"
+						class="form-control" id="password" name="password"
+						oninput="toggleConfirmPassword()">
+				</div>
+
+				<div class="mb-4">
+					<label for="password" class="form-label">パスワード確認</label> <small
+						id="message" class="m-3 text-danger"
+						th:errors="${singUp.confirmPassword}"></small> <input
+						type="password" class="form-control" id="confirmPassword"
+						name="confirmPassword">
 				</div>
 				<div class="d-grid mb-4">
 					<button type="submit" class="btn btn-primary btn-block">
 						<small><strong>登録</strong></small>
 					</button>
 				</div>
+				<!-- Sign Up Mail Error : Mail Already Exist-->
+				<div class="modal fade" id="signUpMailErrorModal" tabindex="-1"
+					aria-labelledby="signUpMailErrorModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">すみません!</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<span>メールアドレスは既に登録されています。</span> <span>別のメールアドレスを選択してください。</span>
+
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
+			<div th:if="${singUpMailError}">
+				<script th:inline="javascript">
+					var myModal = new bootstrap.Modal(document
+							.getElementById('signUpMailErrorModal'));
+					myModal.show();
+				</script>
+			</div>
+
 		</div>
 	</div>
-	
 </body>
 </html>
